@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+    <head>
+
+        <title>Hangman</title>
+
+        <style>
+
+    html body {
+        font-family: Raleway, sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: red;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ <meta name="generator" content="Hugo 0.26" />
+
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Hangman</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/project/">Projects</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:me@example.com"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/username/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/username/"><i class="fa fa-twitter"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://www.linkedin.com/in/username/"><i class="fa fa-linkedin"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://www.stackoverflow.com/username/"><i class="fa fa-stack-overflow"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+
+    
+    
+
+    <h4><a href="/post/hangman/">Hangman</a></h4>
+    <h5>August 19, 2017</h5>
+    
+
+</div>
+
+
+    <br> <div class="text-justify">
+
+<h3 id="学习艀">学习目标</h3>
+
+<ul>
+<li>list</li>
+<li>list.append()</li>
+<li>list.reverse()</li>
+<li>string.split()</li>
+<li>for loop</li>
+<li>string.startswith</li>
+<li>string.endswith</li>
+<li>dict</li>
+<li>dict.keys</li>
+<li>dict.values</li>
+</ul>
+
+<h3 id="toc_1">代码</h3>
+
+<pre><code class="language-python">import random
+
+HANGMANPICS = ['''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========''', '''
+
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========''', '''
+
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========''', '''
+
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========''', '''
+
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========''', '''
+
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========''']
+
+words = 'ada ruby python java groovy elixir basic sharp swift rails'.split()
+
+def getRandomWord(wordList):
+    wordIndex = random.randint(0, len(wordList) - 1)
+    return wordList[wordIndex]
+
+def displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord):
+    print(HANGMANPICS[len(missedLetters)])
+    print()
+    print('Missed letters: ')
+    tmp = ''
+    for letter in missedLetters:
+        tmp = tmp + letter + ' '
+        # print('%s ' %letter)
+    print(tmp)
+
+    blanks = '_' * len(secretWord)
+    for i in range(len(secretWord)): # replace blanks with correctly guessed letters
+        if secretWord[i] in correctLetters:
+            blanks = blanks[:i] + secretWord[i] + blanks[i+1:]
+
+    tmp = ''
+    for letter in blanks: # show the secret word with spaces in between each letter
+        tmp = tmp + letter + ' '
+    print(tmp)
+    print()
+
+def getGuess(alreadyGuessed):
+    while True:
+        print('Guess a letter.')
+        # guess = raw_input()
+        guess = input()
+        guess = guess.lower()
+        if len(guess) != 1:
+            print('Please enter a single letter.')
+        elif guess in alreadyGuessed:
+            print('You have already guessed that letter. Choose again.')
+        elif guess not in 'abcdefghijklmnopqrstuvwxyz':
+            print('Please enter a LETTER.')
+        else:
+            return guess
+
+def playAgain():
+    print('Do you want to play again? (yes or no)')
+    # return raw_input().lower().startswith('y')
+    return input().lower().startswith('y')
+print('H A N G M A N')
+
+
+missedLetters = ''
+correctLetters = ''
+secretWord = getRandomWord(words)
+gameIsDone = False
+while True:
+    displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord)
+
+    guess = getGuess(missedLetters + correctLetters)
+    if guess in secretWord:
+        correctLetters = correctLetters + guess
+
+        foundAllLetters = True
+        for i in range(len(secretWord)):
+            if secretWord[i] not in correctLetters:
+                foundAllLetters = False
+                break
+
+        if foundAllLetters:
+            print('Yes! The secret word is &quot;' + secretWord + '&quot;! You have won!')
+            gameIsDone = True
+
+    else:
+        missedLetters = missedLetters + guess
+        if len(missedLetters) == len(HANGMANPICS) - 1:
+            displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord)
+            print('You have run out of guesses!\nAfter ' +
+                str(len(missedLetters)) + ' missed guesses and ' + str(len (correctLetters)) + ' correct guesses, the word was &quot;' + secretWord + '&quot;')
+            gameIsDone = True
+
+    if gameIsDone:
+        if playAgain():
+            missedLetters = ''
+            correctLetters = ''
+            gameIsDone = False
+            secretWord = getRandomWord(words)
+        else:
+            break
+
+</code></pre>
+
+<h3 id="谋">多行文本</h3>
+
+<pre><code class="language-python">
+'''
+this is a
+multiple line
+string '''
+
+</code></pre>
+
+<h3 id="constant">常量 Constant</h3>
+
+<p>程序运行过程中值被修改的变量，比如HANGMANPICS</p>
+
+<h3 id="list">List</h3>
+
+<p>列表里的每一项我们称为是item，列表是由n个items组成的。</p>
+
+<p>创建</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; spam = ['apples', 'oranges', 'HELLO WORLD']
+&gt;&gt;&gt; spam
+['apples', 'oranges', 'HELLO WORLD']
+</code></pre>
+
+<p>引用</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; animals = ['aardvark', 'anteater', 'antelope', 'albert']
+&gt;&gt;&gt; animals[0]
+'aardvark'
+&gt;&gt;&gt; animals[1]
+'anteater'
+&gt;&gt;&gt; animals[2]
+'antelope'
+&gt;&gt;&gt; animals[3]
+'albert'
+
+</code></pre>
+
+<p>索引越界</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; animals = ['aardvark', 'anteater', 'antelope', 'albert']
+&gt;&gt;&gt; animals[4]
+Traceback (most recent call last):
+File &quot;&quot;, line 1, in
+animals[4]
+IndexError: list index out of range
+&gt;&gt;&gt; animals[99]
+Traceback (most recent call last):
+File &quot;&quot;, line 1, in
+animals[99]
+IndexError: list index out of range
+&gt;&gt;&gt;
+</code></pre>
+
+<p>修改item</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; animals = ['aardvark', 'anteater', 'antelope', 'albert']
+&gt;&gt;&gt; animals[1] = 'ANTEATER'
+&gt;&gt;&gt; animals
+['aardvark', 'ANTEATER', 'antelope', 'albert']
+&gt;&gt;&gt;
+</code></pre>
+
+<p>删除item</p>
+
+<pre><code class="language-python">
+&gt;&gt;&gt; spam = [2, 4, 6, 8, 10]
+&gt;&gt;&gt; del spam[1]
+&gt;&gt;&gt; spam
+[2, 6, 8, 10]
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; spam = [2, 4, 6, 8, 10]
+&gt;&gt;&gt; del spam[1]
+&gt;&gt;&gt; spam
+[2, 6, 8, 10]
+&gt;&gt;&gt; del spam[1]
+&gt;&gt;&gt; spam
+[2, 8, 10]
+&gt;&gt;&gt; del spam[1]
+&gt;&gt;&gt; spam
+[2, 10]
+ &gt;&gt;&gt;
+
+</code></pre>
+
+<p>list的连接</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; [1, 2, 3, 4] + ['apples', 'oranges'] + ['Alice', 'Bob']
+[1, 2, 3, 4, 'apples', 'oranges', 'Alice', 'Bob']
+&gt;&gt;&gt;
+</code></pre>
+
+<h3 id="in">in 操作符</h3>
+
+<ul>
+<li>判断item是否在list中</li>
+<li>判断字符串是否在string中</li>
+</ul>
+
+<pre><code class="language-python">&gt;&gt;&gt; animals = ['aardvark', 'anteater', 'antelope',
+'albert']
+&gt;&gt;&gt; 'antelope' in animals
+True
+&gt;&gt;&gt; 'ant' in animals
+False
+&gt;&gt;&gt; 'ant' in ['beetle', 'wasp', 'ant']
+True
+
+&gt;&gt;&gt; 'hello' in 'Alice said hello to Bob.'
+True
+&gt;&gt;&gt;
+</code></pre>
+
+<h3 id="褋写转">字符串大小写转换</h3>
+
+<ul>
+<li>lower()</li>
+<li>upper()</li>
+</ul>
+
+<h3 id="斜-转-item">列表反转和增加item</h3>
+
+<ul>
+<li>reverse()</li>
+<li>appen()</li>
+</ul>
+
+<pre><code class="language-python">&gt;&gt;&gt; spam = [1, 2, 3, 4, 5, 6, 'meow', 'woof']
+&gt;&gt;&gt; spam.reverse()
+&gt;&gt;&gt; spam
+['woof', 'meow', 6, 5, 4, 3, 2, 1]
+
+ &gt;&gt;&gt; eggs = []
+ &gt;&gt;&gt; eggs.append('hovercraft')
+ &gt;&gt;&gt; eggs
+ ['hovercraft']
+ &gt;&gt;&gt; eggs.append('eels')
+ &gt;&gt;&gt; eggs
+ ['hovercraft', 'eels']
+ &gt;&gt;&gt; eggs.append(42)
+ &gt;&gt;&gt; eggs
+ ['hovercraft', 'eels', 42]
+</code></pre>
+
+<h3 id="蟹">字符串切分</h3>
+
+<pre><code class="language-python">&gt;&gt;&gt; 'My very energetic mother just served us nine
+pies'.split()
+['My', 'very', 'energetic', 'mother', 'just',
+'served', 'us', 'nine', 'pies']
+&gt;&gt;&gt;
+</code></pre>
+</div>
+
+    
+    
+
+    
+
+</main>
+
+
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+
+    </body>
+
+</html>
+
